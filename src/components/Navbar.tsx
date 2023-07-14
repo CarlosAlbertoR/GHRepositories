@@ -11,7 +11,7 @@ const Navbar = () => {
             <img
               onClick={() => {}}
               alt="logo"
-              className="hidden md:block cursor-pointer w-20"
+              className="hidden md:block cursor-pointer w-16"
               src={logo}
             />
           </div>

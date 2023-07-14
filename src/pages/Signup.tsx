@@ -1,31 +1,38 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
-// import { Transition } from "@headlessui/react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import {
+  loginWithEmailAndPassword,
+  loginWithGoogle,
+  signUpWithEmailAndPassword,
+} from "../store/slices/user";
+import { AppDispatch } from "../store/store";
 
 const Signup = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
   const [isLogin, setIsLogin] = useState(true);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
 
   const handleToggleCard = () => {
     setIsLogin(!isLogin);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (isLogin) {
-      // Lógica de inicio de sesión
-      console.log("Inicio de sesión:", username, password);
+      dispatch(loginWithEmailAndPassword(email, password)).then(() => {
+        navigate("/home");
+      });
     } else {
-      // Lógica de registro
-      console.log("Registro:", name, username, password);
+      dispatch(signUpWithEmailAndPassword(email, password)).then(() => {
+        navigate("/home");
+      });
     }
-  };
-
-  const handleGoogleLogin = () => {
-    // Lógica de inicio de sesión con Google
-    console.log("Inicio de sesión con Google");
   };
 
   return (
@@ -35,30 +42,16 @@ const Signup = () => {
           {isLogin ? "Iniciar Sesión" : "Registrarse"}
         </h1>
         <form onSubmit={handleSubmit}>
-          {!isLogin && (
-            <div className="mb-4">
-              <label htmlFor="name" className="text-sm font-medium">
-                Nombre
-              </label>
-              <input
-                type="text"
-                id="name"
-                className="border border-gray-300 rounded-md px-3 py-2 w-full mt-1"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-          )}
           <div className="mb-4">
-            <label htmlFor="username" className="text-sm font-medium">
-              Usuario
+            <label htmlFor="email" className="text-sm font-medium">
+              Email
             </label>
             <input
-              type="text"
-              id="username"
+              type="email"
+              id="email"
               className="border border-gray-300 rounded-md px-3 py-2 w-full mt-1"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-4">
@@ -91,10 +84,9 @@ const Signup = () => {
             {isLogin ? "Regístrate" : "Inicia Sesión"}
           </button>
         </div>
-
         <div className="mt-6">
           <button
-            onClick={handleGoogleLogin}
+            onClick={() => dispatch(loginWithGoogle())}
             className="flex items-center justify-center bg-red-500 text-white rounded-md px-4 py-2 w-full font-semibold"
           >
             <FaGoogle className="mr-2 text-xl" />
