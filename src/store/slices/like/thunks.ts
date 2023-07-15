@@ -3,7 +3,9 @@ import {
   collection,
   doc,
   getDocs,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { AppDispatch } from "../../store";
 import { db } from "../../../config/firebase";
@@ -14,12 +16,20 @@ const likesCollectionRef = collection(db, "gh-repositories");
 export const getLikedRepositories = (userId: string) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const response = await getDocs(likesCollectionRef);
+      const response = await getDocs(
+        query(likesCollectionRef, where("user_id", "==", userId))
+      );
+
       const data = response.docs.map((doc) => ({
         ...doc.data(),
         repo_likes: doc.data().repo_likes,
         id: doc.id,
       }));
+
+      if (!data || data.length === 0) {
+        dispatch(addLikedRepositories(userId, JSON.stringify([])));
+        return;
+      }
 
       const likedRepositories = JSON.parse(data[0].repo_likes);
       dispatch(

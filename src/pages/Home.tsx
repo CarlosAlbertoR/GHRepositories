@@ -31,13 +31,16 @@ const Home = () => {
 
   return (
     <div className="max-w-[2520px] mx-auto px-4 sm:px-2 md:px-10 xl:px-20 ">
-      <h1>Mis Repositorios</h1>
-      <input
-        type="text"
-        placeholder="Buscar repositorio"
-        value={searchTerm}
-        onChange={handleSearch}
-      />
+      <div className="flex justify-between items-center mt-4">
+        <h1 className="text-2xl font-bold">Mis Repositorios</h1>
+        <input
+          type="text"
+          placeholder="Buscar repositorio"
+          value={searchTerm}
+          onChange={handleSearch}
+          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
 
       <ul
         className="
