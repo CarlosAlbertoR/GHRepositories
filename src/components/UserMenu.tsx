@@ -7,12 +7,14 @@ import MenuItem from "./MenuItem";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/store";
 import { logout } from "../store/slices/user";
+import { useNavigate } from "react-router-dom";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;
 }
 const UserMenu: FC<UserMenuProps> = ({ currentUser }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = useCallback(() => setIsOpen((value) => !value), []);
@@ -39,8 +41,13 @@ const UserMenu: FC<UserMenuProps> = ({ currentUser }) => {
         <div className="absolute rounded-xl shadow-md w-[40vw]  bg-white overflow-hidden right-0 top-12 text-sm">
           <div className="flex flex-col cursor-pointer">
             <>
-              <MenuItem label="My profile" onClick={() => {}} />
-              <MenuItem label="My favorites" onClick={() => {}} />
+              <MenuItem
+                label="My profile"
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                  navigate("/profile");
+                }}
+              />
               <hr />
               <MenuItem label="Logout" onClick={() => dispatch(logout())} />
             </>

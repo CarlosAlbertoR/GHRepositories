@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Repository } from "../../../models";
 
 export interface LikeState {
   collectionId: string;
-  likedRepositories: Array<string>;
+  likedRepositories: Array<Repository>;
   totalLiked: number;
 }
 

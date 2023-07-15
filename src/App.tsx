@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import { RootState, persistor } from "./store/store";
 import Navbar from "./components/Navbar";
 import { PersistGate } from "redux-persist/integration/react";
+import Profile from "./pages/Profile";
 
 function App() {
   const user = useSelector((state: RootState) => state.user.user);
@@ -25,6 +26,12 @@ function App() {
               <Route
                 path="/home"
                 element={user ? <Home /> : <Navigate to="/" replace={true} />}
+              />
+              <Route
+                path="/profile"
+                element={
+                  user ? <Profile /> : <Navigate to="/" replace={true} />
+                }
               />
               <Route path="/" element={<Signup />} />
             </Routes>

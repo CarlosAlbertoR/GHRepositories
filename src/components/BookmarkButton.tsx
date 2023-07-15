@@ -1,19 +1,19 @@
 import React from "react";
-import { SafeUser } from "../models";
+import { Repository, SafeUser } from "../models";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import useFavorite from "../hooks/useFavorite";
 
 interface BookmarkButtonProps {
-  repositoryId: string;
+  repository: Repository;
   currentUser?: SafeUser | null;
 }
 
 const BookmarkButton: React.FC<BookmarkButtonProps> = ({
   currentUser,
-  repositoryId,
+  repository,
 }) => {
   const { hasFavorited, toggleFavorite } = useFavorite({
-    repositoryId,
+    repository,
     currentUser,
   });
 

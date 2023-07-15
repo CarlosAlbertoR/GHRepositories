@@ -10,6 +10,7 @@ import {
 import { AppDispatch } from "../../store";
 import { db } from "../../../config/firebase";
 import { setRepositoriesLiked } from "./likeSlice";
+import { Repository } from "../../../models";
 
 const likesCollectionRef = collection(db, "gh-repositories");
 
@@ -27,7 +28,7 @@ export const getLikedRepositories = (userId: string) => {
       }));
 
       if (!data || data.length === 0) {
-        dispatch(addLikedRepositories(userId, JSON.stringify([])));
+        dispatch(addLikedRepositories(userId, []));
         return;
       }
 
@@ -46,7 +47,7 @@ export const getLikedRepositories = (userId: string) => {
 
 export const addLikedRepositories = (
   userId: string,
-  likedRepositories: string
+  likedRepositories: Array<Repository>
 ) => {
   return async (dispatch: AppDispatch) => {
     try {

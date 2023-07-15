@@ -1,23 +1,23 @@
 import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { SafeUser } from "../models";
+import { Repository, SafeUser } from "../models";
 import { AppDispatch, RootState } from "../store/store";
 import { updateLikedRepositories } from "../store/slices/like";
 
 interface IUseFavorite {
-  repositoryId: string;
+  repository: Repository;
   currentUser?: SafeUser | null;
 }
 
-const useFavorite = ({ repositoryId, currentUser }: IUseFavorite) => {
+const useFavorite = ({ repository, currentUser }: IUseFavorite) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const likes = useSelector((state: RootState) => state.likes);
 
   const hasFavorited = useMemo(() => {
-    return likes.likedRepositories.includes(repositoryId);
-  }, [repositoryId, likes.likedRepositories]);
+    return likes.likedRepositories.find((repo) => repo.id === repository.id);
+  }, [repository, likes.likedRepositories]);
 
   const toggleFavorite = useCallback(
     async (e: React.MouseEvent<HTMLDivElement>) => {
@@ -28,7 +28,7 @@ const useFavorite = ({ repositoryId, currentUser }: IUseFavorite) => {
       try {
         if (hasFavorited) {
           const updatedLikes = likes.likedRepositories.filter(
-            (id) => id !== repositoryId
+            (repo) => repo.id !== repository.id
           );
           dispatch(
             updateLikedRepositories(
@@ -37,13 +37,8 @@ const useFavorite = ({ repositoryId, currentUser }: IUseFavorite) => {
             )
           );
         } else {
-          const updatedLikes = [...likes.likedRepositories, repositoryId];
-          console.log(
-            updatedLikes,
-            repositoryId,
-            likes.likedRepositories,
-            typeof likes
-          );
+          const updatedLikes = [...likes.likedRepositories, repository];
+
           dispatch(
             updateLikedRepositories(
               JSON.stringify(updatedLikes),
@@ -55,7 +50,7 @@ const useFavorite = ({ repositoryId, currentUser }: IUseFavorite) => {
         console.log("Error toggling favorite:", error);
       }
     },
-    [currentUser, hasFavorited, repositoryId, likes, dispatch]
+    [currentUser, hasFavorited, repository, likes, dispatch]
   );
 
   return { hasFavorited, toggleFavorite };

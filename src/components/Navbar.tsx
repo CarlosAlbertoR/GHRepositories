@@ -4,8 +4,11 @@ import logo from "../assets/logo.png";
 import UserMenu from "./UserMenu";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   const currentUser = useSelector((state: RootState) => state.user).user;
 
   return (
@@ -14,7 +17,7 @@ const Navbar = () => {
         <div className="max-w-[2520px] mx-auto px-4 sm:px-2 md:px-10 xl:px-20 ">
           <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
             <img
-              onClick={() => {}}
+              onClick={() => navigate("/home")}
               alt="logo"
               className="hidden md:block cursor-pointer w-12"
               src={logo}
