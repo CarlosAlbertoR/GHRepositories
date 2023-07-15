@@ -5,7 +5,7 @@ import {
   signOut,
 } from "firebase/auth";
 
-import { auth, googleProvider } from "../../../config/firebase";
+import { auth, githubProvider, googleProvider } from "../../../config/firebase";
 import { AppDispatch } from "../../store";
 import { setUser } from "./userSlice";
 
@@ -57,6 +57,26 @@ export const loginWithGoogle = () => {
   return async (dispatch: AppDispatch) => {
     try {
       await signInWithPopup(auth, googleProvider).then((userCredential) => {
+        const user = userCredential.user;
+        dispatch(
+          setUser({
+            displayName: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL,
+            userId: user.uid,
+          })
+        );
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const loginWithGithub = () => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      await signInWithPopup(auth, githubProvider).then((userCredential) => {
         const user = userCredential.user;
         dispatch(
           setUser({

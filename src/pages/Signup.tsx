@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { FaGoogle } from "react-icons/fa";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import {
   loginWithEmailAndPassword,
+  loginWithGithub,
   loginWithGoogle,
   signUpWithEmailAndPassword,
 } from "../store/slices/user";
@@ -33,6 +34,18 @@ const Signup = () => {
         navigate("/home");
       });
     }
+  };
+
+  const handleGoogleLogin = async () => {
+    dispatch(loginWithGoogle()).then(() => {
+      navigate("/home");
+    });
+  };
+
+  const handleGitHubLogin = async () => {
+    dispatch(loginWithGithub()).then(() => {
+      navigate("/home");
+    });
   };
 
   return (
@@ -86,11 +99,19 @@ const Signup = () => {
         </div>
         <div className="mt-6">
           <button
-            onClick={() => dispatch(loginWithGoogle())}
+            onClick={handleGoogleLogin}
             className="flex items-center justify-center bg-red-500 text-white rounded-md px-4 py-2 w-full font-semibold"
           >
             <FaGoogle className="mr-2 text-xl" />
             Iniciar sesión con Google
+          </button>
+
+          <button
+            onClick={handleGitHubLogin}
+            className="flex items-center justify-center bg-gray-800 text-white rounded-md px-4 py-2 w-full mt-2 font-semibold"
+          >
+            <FaGithub className="mr-2 text-xl" />
+            Continuar con GitHub
           </button>
         </div>
       </div>

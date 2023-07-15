@@ -7,22 +7,29 @@ import {
 import { useSelector } from "react-redux";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
-import { RootState } from "./store/store";
+import { RootState, persistor } from "./store/store";
+import Navbar from "./components/Navbar";
+import { PersistGate } from "redux-persist/integration/react";
 
 function App() {
   const user = useSelector((state: RootState) => state.user.user);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/signup" element={<Signup />} />
-        <Route
-          path="/home"
-          element={user ? <Home /> : <Navigate to="/" replace={true} />}
-        />
-        <Route path="/" element={<Signup />} />
-      </Routes>
-    </Router>
+    <PersistGate loading={null} persistor={persistor}>
+      <Router>
+        <div>
+          <Navbar />
+          <Routes>
+            <Route path="/signup" element={<Signup />} />
+            <Route
+              path="/home"
+              element={user ? <Home /> : <Navigate to="/" replace={true} />}
+            />
+            <Route path="/" element={<Signup />} />
+          </Routes>
+        </div>
+      </Router>
+    </PersistGate>
   );
 }
 
