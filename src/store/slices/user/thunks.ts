@@ -8,6 +8,7 @@ import {
 import { auth, githubProvider, googleProvider } from "../../../config/firebase";
 import { AppDispatch } from "../../store";
 import { setUser } from "./userSlice";
+import { toast } from "react-hot-toast";
 
 export const signUpWithEmailAndPassword = (email: string, password: string) => {
   return async (dispatch: AppDispatch) => {
@@ -26,8 +27,8 @@ export const signUpWithEmailAndPassword = (email: string, password: string) => {
           );
         }
       );
-    } catch (error) {
-      console.log("Error al registrar usuario:", error);
+    } catch {
+      toast.error("Something went wrong!");
     }
   };
 };
@@ -49,8 +50,8 @@ export const loginWithEmailAndPassword = (email: string, password: string) => {
           );
         }
       );
-    } catch (err) {
-      console.log(err);
+    } catch {
+      toast.error("Something went wrong!");
     }
   };
 };
@@ -70,8 +71,8 @@ export const loginWithGoogle = () => {
           })
         );
       });
-    } catch (err) {
-      console.log(err);
+    } catch {
+      toast.error("Something went wrong!");
     }
   };
 };
@@ -95,8 +96,8 @@ export const loginWithGithub = () => {
           );
         }
       );
-    } catch (err) {
-      console.log(err);
+    } catch {
+      toast.error("Something went wrong!");
     }
   };
 };
@@ -106,8 +107,8 @@ export const logout = () => {
     try {
       await signOut(auth);
       dispatch(setUser(null));
-    } catch (err) {
-      console.log(err);
+    } catch {
+      toast.error("Something went wrong!");
     }
   };
 };

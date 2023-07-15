@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import { ghApi } from "../../../api/ghApi";
 import { AppDispatch } from "../../store";
 import { setRepositories } from "./repositorySlice";
@@ -36,8 +37,8 @@ export const getRepositories = (username: string) => {
       );
 
       dispatch(setRepositories({ repositories: repositories }));
-    } catch (error) {
-      console.error("Error al obtener los repositorios:", error);
+    } catch {
+      toast.error("Something went wrong!");
     }
   };
 };

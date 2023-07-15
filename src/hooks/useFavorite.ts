@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Repository, SafeUser } from "../models";
 import { AppDispatch, RootState } from "../store/store";
 import { updateLikedRepositories } from "../store/slices/like";
+import { toast } from "react-hot-toast";
 
 interface IUseFavorite {
   repository: Repository;
@@ -35,7 +36,9 @@ const useFavorite = ({ repository, currentUser }: IUseFavorite) => {
               JSON.stringify(updatedLikes),
               likes.collectionId
             )
-          );
+          ).then(() => {
+            toast.success("Unliked repository!");
+          });
         } else {
           const updatedLikes = [...likes.likedRepositories, repository];
           dispatch(
@@ -43,10 +46,12 @@ const useFavorite = ({ repository, currentUser }: IUseFavorite) => {
               JSON.stringify(updatedLikes),
               likes.collectionId
             )
-          );
+          ).then(() => {
+            toast.success("Liked repository!");
+          });
         }
-      } catch (error) {
-        console.log("Error toggling favorite:", error);
+      } catch {
+        toast.error("Something went wrong!");
       }
     },
     [currentUser, hasFavorited, repository, likes, dispatch]

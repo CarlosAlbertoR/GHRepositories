@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import { ghApi } from "../../../api/ghApi";
 import { AppDispatch } from "../../store";
 import { setTopUsers } from "./topUserSlice";
@@ -39,8 +40,8 @@ export const getTopUsers = () => {
       });
 
       dispatch(setTopUsers({ topUsers: users }));
-    } catch (error) {
-      console.error("Error al obtener los usuarios top:", error);
+    } catch {
+      toast.error("Something went wrong!");
     }
   };
 };
@@ -87,8 +88,8 @@ export const getUsersByUsername = (username: string) => {
       });
 
       dispatch(setTopUsers({ topUsers: users }));
-    } catch (error) {
-      console.error("Error al obtener los usuarios por username:", error);
+    } catch {
+      toast.error("Something went wrong!");
     }
   };
 };

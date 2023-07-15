@@ -11,6 +11,7 @@ import { AppDispatch } from "../../store";
 import { db } from "../../../config/firebase";
 import { setRepositoriesLiked } from "./likeSlice";
 import { Repository } from "../../../models";
+import { toast } from "react-hot-toast";
 
 const likesCollectionRef = collection(db, "gh-repositories");
 
@@ -39,8 +40,8 @@ export const getLikedRepositories = (userId: string) => {
           collectionId: data[0].id,
         })
       );
-    } catch (err) {
-      console.log(err);
+    } catch {
+      toast.error("Something went wrong!");
     }
   };
 };
@@ -57,8 +58,8 @@ export const addLikedRepositories = (
       });
 
       dispatch(getLikedRepositories(userId));
-    } catch (err) {
-      console.log(err);
+    } catch {
+      toast.error("Something went wrong!");
     }
   };
 };
@@ -78,8 +79,8 @@ export const updateLikedRepositories = (
           collectionId: id,
         })
       );
-    } catch (err) {
-      console.log(err);
+    } catch {
+      toast.error("Something went wrong!");
     }
   };
 };
