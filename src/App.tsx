@@ -54,7 +54,12 @@ function App() {
                   user ? <Profile /> : <Navigate to="/" replace={true} />
                 }
               />
-              <Route path="/" element={<Signup />} />
+              <Route
+                path="/"
+                element={
+                  !user ? <Signup /> : <Navigate to="/home" replace={true} />
+                }
+              />
             </Routes>
           </div>
         </div>
