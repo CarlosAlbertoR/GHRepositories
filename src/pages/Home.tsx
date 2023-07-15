@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { AppDispatch, RootState } from "../store/store";
-import { getRepositories } from "../store/slices/repository";
 import CardRepository from "../components/CardRepository";
+import { getLikedRepositories } from "../store/slices/like";
+import { getRepositories } from "../store/slices/repository";
+import { AppDispatch, RootState } from "../store/store";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,8 +17,9 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+    dispatch(getLikedRepositories(currentUser?.userId || ""));
     dispatch(getRepositories("CarlosAlbertoR"));
-  }, [dispatch]);
+  }, [currentUser, dispatch]);
 
   const handleSearch = (e: any) => {
     setSearchTerm(e.target.value);
