@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface SafeUser {
-  userId: string;
-  displayName: string | null;
-  email: string | null;
-  photoUrl: string | null;
-}
+import { SafeUser } from "../../../models";
 
 interface UserState {
   user: SafeUser | null;

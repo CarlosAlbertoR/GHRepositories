@@ -1,8 +1,13 @@
 import React from "react";
 
 import logo from "../assets/logo.png";
+import UserMenu from "./UserMenu";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const Navbar = () => {
+  const currentUser = useSelector((state: RootState) => state.user).user;
+
   return (
     <div className="w-full fixed bg-white z-10 shadow-sm">
       <div className="py-4 border-b-[1px]">
@@ -11,9 +16,10 @@ const Navbar = () => {
             <img
               onClick={() => {}}
               alt="logo"
-              className="hidden md:block cursor-pointer w-16"
+              className="hidden md:block cursor-pointer w-12"
               src={logo}
             />
+            {currentUser && <UserMenu currentUser={currentUser} />}
           </div>
         </div>
       </div>

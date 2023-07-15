@@ -49,7 +49,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center my-8">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full md:w-1/2 lg:w-1/3">
         <h1 className="text-2xl font-semibold mb-4">
           {isLogin ? "Iniciar Sesión" : "Registrarse"}

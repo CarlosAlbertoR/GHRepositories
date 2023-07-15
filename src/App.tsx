@@ -17,16 +17,18 @@ function App() {
   return (
     <PersistGate loading={null} persistor={persistor}>
       <Router>
-        <div>
+        <div className="flex flex-col min-h-screen">
           <Navbar />
-          <Routes>
-            <Route path="/signup" element={<Signup />} />
-            <Route
-              path="/home"
-              element={user ? <Home /> : <Navigate to="/" replace={true} />}
-            />
-            <Route path="/" element={<Signup />} />
-          </Routes>
+          <div className="mt-24">
+            <Routes>
+              <Route path="/signup" element={<Signup />} />
+              <Route
+                path="/home"
+                element={user ? <Home /> : <Navigate to="/" replace={true} />}
+              />
+              <Route path="/" element={<Signup />} />
+            </Routes>
+          </div>
         </div>
       </Router>
     </PersistGate>
