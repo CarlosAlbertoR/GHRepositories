@@ -19,7 +19,7 @@ const Navbar = () => {
             <img
               onClick={() => navigate("/home")}
               alt="logo"
-              className="hidden md:block cursor-pointer w-12"
+              className="cursor-pointer w-12"
               src={logo}
             />
             {currentUser && <UserMenu currentUser={currentUser} />}
