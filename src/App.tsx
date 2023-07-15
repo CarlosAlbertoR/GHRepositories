@@ -27,7 +27,12 @@ function App() {
           <Navbar />
           <div className="mt-24">
             <Routes>
-              <Route path="/signup" element={<Signup />} />
+              <Route
+                path="/signup"
+                element={
+                  !user ? <Signup /> : <Navigate to="/home" replace={true} />
+                }
+              />
               <Route
                 path="/home"
                 element={user ? <Home /> : <Navigate to="/" replace={true} />}
