@@ -1,9 +1,9 @@
 import { ghApi } from "../../../api/ghApi";
-import { AppDispatch, RootState } from "../../store";
+import { AppDispatch } from "../../store";
 import { setRepositories } from "./repositorySlice";
 
 export const getRepositories = (username: string) => {
-  return async (dispatch: AppDispatch, getState: () => RootState) => {
+  return async (dispatch: AppDispatch) => {
     try {
       const query = `
         query($username: String!) {

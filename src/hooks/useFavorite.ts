@@ -38,7 +38,6 @@ const useFavorite = ({ repository, currentUser }: IUseFavorite) => {
           );
         } else {
           const updatedLikes = [...likes.likedRepositories, repository];
-
           dispatch(
             updateLikedRepositories(
               JSON.stringify(updatedLikes),

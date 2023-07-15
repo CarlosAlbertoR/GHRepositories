@@ -15,7 +15,10 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
 }) => {
   return (
     <div className="col-span-1 cursor-pointer group">
-      <div className="flex flex-col items-center gap-2 w-full p-4 border border-gray-300 rounded-md shadow-md relative">
+      <div
+        className="flex flex-col items-center gap-2 w-full p-4 border border-gray-300 rounded-md shadow-md relative"
+        onClick={() => window.open(repository.url, "_blank")}
+      >
         <div className="absolute top-2 right-2">
           <BookmarkButton repository={repository} currentUser={currentUser} />
         </div>

@@ -1,41 +1,39 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import CardRepository from "../components/CardRepository";
-import { getLikedRepositories } from "../store/slices/like";
-import { getRepositories } from "../store/slices/repository";
 import { AppDispatch, RootState } from "../store/store";
+import { getTopUsers } from "../store/slices/top-user";
+import CardUser from "../components/CardUser";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const currentUser = useSelector((state: RootState) => state.user).user;
-  const repositories = useSelector(
-    (state: RootState) => state.repositories
-  ).repositories;
+  const topUsers = useSelector((state: RootState) => state.topUser).topUsers;
 
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    dispatch(getLikedRepositories(currentUser?.userId || ""));
-    dispatch(getRepositories(currentUser?.githubUserName || ""));
+    dispatch(getTopUsers());
   }, [currentUser, dispatch]);
 
   const handleSearch = (e: any) => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredRepositories = repositories.filter((repo) =>
-    repo.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredUsers = topUsers.filter((user) =>
+  //   user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
+
+  const filteredUsers = topUsers;
 
   return (
     <div className="max-w-[2520px] mx-auto px-4 sm:px-2 md:px-10 xl:px-20 ">
       <div className="flex justify-between items-center mt-4">
-        <h1 className="text-2xl font-bold">My Repositories</h1>
+        <h1 className="text-2xl font-bold">Top Users</h1>
         <input
           type="text"
-          placeholder="Search repository"
+          placeholder="Search user"
           value={searchTerm}
           onChange={handleSearch}
           className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -55,12 +53,8 @@ const Home = () => {
           gap-8
         "
       >
-        {filteredRepositories.map((repository) => (
-          <CardRepository
-            key={repository.id}
-            repository={repository}
-            currentUser={currentUser}
-          />
+        {filteredUsers.map((user) => (
+          <CardUser key={user.username} user={user} />
         ))}
       </ul>
     </div>

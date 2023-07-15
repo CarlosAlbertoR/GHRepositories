@@ -48,6 +48,13 @@ const UserMenu: FC<UserMenuProps> = ({ currentUser }) => {
                   navigate("/profile");
                 }}
               />
+              <MenuItem
+                label="My repositories"
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                  navigate("/my-repositories");
+                }}
+              />
               <hr />
               <MenuItem label="Logout" onClick={() => dispatch(logout())} />
             </>

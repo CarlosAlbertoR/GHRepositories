@@ -44,7 +44,7 @@ const Signup = () => {
 
   const handleGitHubLogin = async () => {
     dispatch(loginWithGithub()).then(() => {
-      navigate("/home");
+      navigate("/my-repositories");
     });
   };
 
