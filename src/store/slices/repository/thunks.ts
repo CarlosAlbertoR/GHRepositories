@@ -8,9 +8,10 @@ export const getRepositories = (username: string) => {
       const query = `
         query($username: String!) {
           user(login: $username) {
-            repositories(first: 10) {
+            repositories(first: 100) {
               edges {
                 node {
+                  id
                   name
                   description
                   url

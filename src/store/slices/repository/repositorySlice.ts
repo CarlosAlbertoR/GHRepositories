@@ -1,10 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface Repository {
-  name: string;
-  description: string;
-  url: string;
-}
+import { Repository } from "../../../models";
 
 export interface RepositoryState {
   repositories: Array<Repository>;

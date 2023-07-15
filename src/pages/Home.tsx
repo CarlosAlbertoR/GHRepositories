@@ -3,16 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "../store/store";
 import { getRepositories } from "../store/slices/repository";
+import CardRepository from "../components/CardRepository";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
 
+  const currentUser = useSelector((state: RootState) => state.user).user;
   const repositories = useSelector(
     (state: RootState) => state.repositories
   ).repositories;
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [favoriteRepositories, setFavoriteRepositories] = useState([]);
 
   useEffect(() => {
     dispatch(getRepositories("CarlosAlbertoR"));
@@ -26,20 +27,8 @@ const Home = () => {
     repo.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // const toggleFavorite = (repo) => {
-  //   if (favoriteRepositories.includes(repo)) {
-  //     // Si el repositorio ya está en la lista de favoritos, se quita
-  //     setFavoriteRepositories(
-  //       favoriteRepositories.filter((favorite) => favorite !== repo)
-  //     );
-  //   } else {
-  //     // Si el repositorio no está en la lista de favoritos, se agrega
-  //     setFavoriteRepositories([...favoriteRepositories, repo]);
-  //   }
-  // };
-
   return (
-    <div>
+    <div className="max-w-[2520px] mx-auto px-4 sm:px-2 md:px-10 xl:px-20 ">
       <h1>Mis Repositorios</h1>
       <input
         type="text"
@@ -48,16 +37,28 @@ const Home = () => {
         onChange={handleSearch}
       />
 
-      <ul>
-        {filteredRepositories.map((repo) => (
-          <li key={repo.url}>
-            <span>{repo.name}</span>
-            {/* <button onClick={() => toggleFavorite(repo)}>
-              {favoriteRepositories.includes(repo)
-                ? "Quitar de favoritos"
-                : "Agregar a favoritos"}
-            </button> */}
-          </li>
+      <ul
+        className="
+          pt-24 
+          grid 
+          grid-cols-1 
+          sm:grid-cols-2 
+          md:grid-cols-3 
+          lg:grid-cols-4 
+          xl:grid-cols-5 
+          2xl:grid-cols-6 
+          gap-8
+        "
+      >
+        {filteredRepositories.map((repository) => (
+          <CardRepository
+            key={repository.id}
+            id={repository.id}
+            name={repository.name}
+            description={repository.description}
+            url={repository.url}
+            currentUser={currentUser}
+          />
         ))}
       </ul>
     </div>
