@@ -18,7 +18,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getLikedRepositories(currentUser?.userId || ""));
-    dispatch(getRepositories("CarlosAlbertoR"));
+    dispatch(getRepositories(currentUser?.githubUserName || ""));
   }, [currentUser, dispatch]);
 
   const handleSearch = (e: any) => {

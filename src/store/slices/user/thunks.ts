@@ -21,6 +21,7 @@ export const signUpWithEmailAndPassword = (email: string, password: string) => {
               email: user.email,
               photoUrl: user.photoURL,
               userId: user.uid,
+              githubUserName: null,
             })
           );
         }
@@ -43,6 +44,7 @@ export const loginWithEmailAndPassword = (email: string, password: string) => {
               email: user.email,
               photoUrl: user.photoURL,
               userId: user.uid,
+              githubUserName: null,
             })
           );
         }
@@ -64,6 +66,7 @@ export const loginWithGoogle = () => {
             email: user.email,
             photoUrl: user.photoURL,
             userId: user.uid,
+            githubUserName: null,
           })
         );
       });
@@ -76,17 +79,22 @@ export const loginWithGoogle = () => {
 export const loginWithGithub = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      await signInWithPopup(auth, githubProvider).then((userCredential) => {
-        const user = userCredential.user;
-        dispatch(
-          setUser({
-            displayName: user.displayName,
-            email: user.email,
-            photoUrl: user.photoURL,
-            userId: user.uid,
-          })
-        );
-      });
+      await signInWithPopup(auth, githubProvider).then(
+        (userCredential: any) => {
+          const user = userCredential.user;
+          const githubUsername = user.reloadUserInfo.screenName;
+
+          dispatch(
+            setUser({
+              displayName: user.displayName,
+              email: user.email,
+              photoUrl: user.photoURL,
+              userId: user.uid,
+              githubUserName: githubUsername,
+            })
+          );
+        }
+      );
     } catch (err) {
       console.log(err);
     }
