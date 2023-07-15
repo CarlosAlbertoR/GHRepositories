@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from "../store/store";
 import placeholder from "../assets/placeholder.jpg";
 import { getLikedRepositories } from "../store/slices/like";
 import CardRepository from "../components/CardRepository";
+import { BsExclamationCircleFill } from "react-icons/bs";
 
 const Profile = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,6 +29,12 @@ const Profile = () => {
     repo.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const emptyState = (
+    <div className="flex items-center justify-center bg-white rounded-md shadow-md h-32 mt-24">
+      <BsExclamationCircleFill className="text-4xl text-red-500 mr-4" />
+      <p className="text-gray-500">You have no favorited repositories yet.</p>
+    </div>
+  );
   return (
     <div className="max-w-[2520px] mx-auto px-4 sm:px-2 md:px-10 xl:px-20">
       <div className="shadow-md p-6 rounded-md">
@@ -58,9 +65,11 @@ const Profile = () => {
             className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-
-        <ul
-          className="
+        {likedRepositories.length === 0 ? (
+          emptyState
+        ) : (
+          <ul
+            className="
           pt-24 
           grid 
           grid-cols-1 
@@ -71,15 +80,16 @@ const Profile = () => {
           2xl:grid-cols-6 
           gap-8
         "
-        >
-          {filteredRepositories.map((repository) => (
-            <CardRepository
-              key={repository.id}
-              repository={repository}
-              currentUser={currentUser}
-            />
-          ))}
-        </ul>
+          >
+            {filteredRepositories.map((repository) => (
+              <CardRepository
+                key={repository.id}
+                repository={repository}
+                currentUser={currentUser}
+              />
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

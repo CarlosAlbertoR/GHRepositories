@@ -30,6 +30,13 @@ const MyRepositories = () => {
     repo.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const emptyState = (
+    <div className="flex items-center justify-center bg-white rounded-md shadow-md h-32 mt-24">
+      <BsExclamationCircleFill className="text-4xl text-red-500 mr-4" />
+      <p className="text-gray-500">No associated GitHub account found.</p>
+    </div>
+  );
+
   return (
     <div className="max-w-[2520px] mx-auto px-4 sm:px-2 md:px-10 xl:px-20 ">
       <div className="flex justify-between items-center mt-4">
@@ -66,14 +73,7 @@ const MyRepositories = () => {
           ))}
         </ul>
       ) : (
-        <div className="mt-8 text-center">
-          <div className="flex items-center justify-center bg-white rounded-md shadow-md p-6">
-            <BsExclamationCircleFill className="text-4xl text-red-500 mr-4" />
-            <p className="text-gray-500">
-              No se encontró una cuenta de GitHub asociada.
-            </p>
-          </div>
-        </div>
+        emptyState
       )}
     </div>
   );
